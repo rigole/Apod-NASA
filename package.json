@@ -1,0 +1,26 @@
+{
+  "name": "Apod-NASA",
+  "version": "1.0.0",
+  "description": "This project is to help to Work with NodeJS",
+  "main": "index.js",
+  "dependencies": {
+    "requirejs": "^2.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "cd server && npm run watch",
+    "watch": "",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rigole/Apod-NASA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rigole/Apod-NASA/issues"
+  },
+  "homepage": "https://github.com/rigole/Apod-NASA#readme"
+}
