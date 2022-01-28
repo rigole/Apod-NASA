@@ -1,12 +1,21 @@
-import { useMemo } from "react";
+import {useMemo, useState, useEffect} from "react";
 import { Appear, Button, Loading, Paragraph } from "arwes";
 import Clickable from "../components/Clickable";
+import  { httpGetPlanets } from "../hooks/requests"
 
 const Launch = props => {
+  const[planets, setPlanets] = useState([])
   const selectorBody = useMemo(() => {
+    httpGetPlanets()
+        .then((data) => {
+          setPlanets(data)
+        })
 
-    return props.planets?.map(planet =>
-        <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>
+    /*return props.planets?.map(planet =>
+        <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>*/
+    Array.from(planets).map( (planet) =>{
+      console.log(planet)
+          }
     );
   }, [props.planets]);
 
