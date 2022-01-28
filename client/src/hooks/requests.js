@@ -14,6 +14,9 @@ const API_URL = 'http://localhost:8000';
        .catch((error) => console.log(error))
 
 
+  const response = await fetch(`${API_URL}/planets`);
+  return await response.json();
+
 }
 
 async function httpGetLaunches() {
