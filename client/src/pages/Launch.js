@@ -24,7 +24,7 @@ const Launch = props => {
 
              planets.map(planet => {
                 return(
-                    <option value={planet.kepler_name} key={planet.kepler_name}>{planet["kepler_name"]}</option>
+                    <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>
                 )
 
                     /*Array.from(planets).map( (planet) =>{
