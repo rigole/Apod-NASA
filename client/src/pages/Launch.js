@@ -4,37 +4,12 @@ import Clickable from "../components/Clickable";
 import  { httpGetPlanets } from "../hooks/requests"
 
 const Launch = props => {
-    const[planets, setPlanets] = useState([])
-    const SelectorBody = () => {
 
-        const loadPlanets = () =>{
-            httpGetPlanets()
-                .then((data) => {
-                    setPlanets(data)
-                    console.log(data)
-                })
-                .catch(error => console.log(error))
-        }
-
-        useEffect( () => {
-            loadPlanets()
-        }, [])
-
-
-
-             planets.map(planet => {
-                return(
-                    <option value={planet.kepler_name} key={planet.kepler_name}>{planet["kepler_name"]}</option>
-                )
-
-                    /*Array.from(planets).map( (planet) =>{
-                            console.log(planet)
-                        }*/
-                }
-            );
-
-    };
-
+    const selectorBody = useMemo(() => {
+        return props.planets?.map(planet =>
+            <option value={planet.kepler_name} key={planet.kepler_name}>{planet.kepler_name}</option>
+        );
+    }, [props.planets]);
     const today = new Date().toISOString().split("T")[0];
 
     return <Appear id="launch" animate show={props.entered}>
@@ -54,7 +29,7 @@ const Launch = props => {
             <input type="text" id="rocket-name" name="rocket-name" defaultValue="Explorer IS1" />
             <label htmlFor="planets-selector">Destination Exoplanet</label>
             <select id="planets-selector" name="planets-selector">
-                {SelectorBody}
+                {selectorBody}
             </select>
             <Clickable>
                 <Button animate
