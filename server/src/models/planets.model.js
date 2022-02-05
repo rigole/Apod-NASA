@@ -37,8 +37,12 @@ function loadPlanetsData(){
     })
 }
 
+function getAllPlanets(){
+    return isHabitablePlanets
+}
+
 // parse()
 module.exports = {
     loadPlanetsData,
-    planets: isHabitablePlanets,
+    getAllPlanets,
 }
