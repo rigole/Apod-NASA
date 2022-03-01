@@ -4,6 +4,7 @@
   "description": "This project is to help to Work with NodeJS",
   "main": "index.js",
   "dependencies": {
+    "mongoose": "^6.2.4",
     "morgan": "^1.10.0",
     "requirejs": "^2.3.6"
   },
@@ -15,6 +16,7 @@
     "client": "npm start --prefix client",
     "watch": "npm run server & npm run client",
     "deploy": "npm run build --prefix client && npm start --prefix server",
+    "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server",
     "test": "npm run test --prefix server && npm run test --prefix client"
   },
   "repository": {
