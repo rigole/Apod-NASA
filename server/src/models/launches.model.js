@@ -59,7 +59,7 @@ async function getAllLaunches() {
         .find({}, {'__id':0, '__v':0})
 }
 
-function addNewLaunch(launch){
+/*function addNewLaunch(launch){
     latestFlightNumber++;
     launches.set(launch.flightNumber,
         Object.assign(launch, {
@@ -69,6 +69,22 @@ function addNewLaunch(launch){
          flightNumber:  latestFlightNumber,
         })
     )
+}*/
+
+async function scheduleNewLaunch() {
+
+    const newFlightNumber = await getLatestFlightNumber() + 1
+
+    const newLaunch = Object.assign(launch, {
+
+        success: true,
+        upcoming: true,
+        customers: ['FlashPayers', 'MINCOM'],
+        flightNumber: newFlightNumber,
+    });
+
+    await saveLaunch(newLaunch)
+
 }
 
 function abortLaunchById(launchId) {
@@ -81,6 +97,7 @@ function abortLaunchById(launchId) {
 module.exports ={
     existsLaunchWithId,
     getAllLaunches,
-    addNewLaunch,
+    //addNewLaunch,
+    scheduleNewLaunch,
     abortLaunchById,
 }
