@@ -1,12 +1,11 @@
 const http = require('http')
 const  app = require('./app')
-const mongoose = require('mongoose')
-// app.listen()
 
+const { mongoConnect } = require('./services/mongo')
 
 const { loadPlanetsData } = require('./models/planets.model')
 
-const MONGO_URL = "mongodb+srv://plass:123@nasa-cluster.exsxa.mongodb.net/nasaDatabase?retryWrites=true&w=majority"
+
 
 const PORT = process.env.PORT || 8000;
 
@@ -21,12 +20,7 @@ mongoose.connection.on('error', (error) =>{
 
 async function startServer(){
 
-    await mongoose.connect(MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex:true,
-        useFindAndModify: false
-    });
+    await mongoConnect();
     await loadPlanetsData();
 
     server.listen(PORT, () => {
