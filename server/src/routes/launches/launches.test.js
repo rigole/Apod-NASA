@@ -1,12 +1,19 @@
 const request = require('supertest')
 const app = require('../../app')
-const { mongoConnect } = require('../../services/mongo')
+const {
+    mongoConnect,
+    mongoDisconnect,
+} = require('../../services/mongo')
 
 describe('Launches API', () => {
 
     beforeAll(async() => {
         await mongoConnect();
-    })
+    });
+
+    afterAll(async () => {
+        await mongoDisconnect();
+    });
 
 
     describe("Test GET  /launches", () => {
@@ -24,20 +31,20 @@ describe('Launches API', () => {
         const completeLaunchData = {
             mission: "Cameroon Air Force",
             rocket: "CMR 1701-D",
-            target: "Kepler-186 f",
+            target: "Kepler-62 f",
             launchDate: "January 14, 2035",
         }
 
         const launchDataWithoutDate = {
             mission: "Cameroon Air Force",
             rocket: "CMR 1701-D",
-            target: "Kepler-186 f",
+            target: "Kepler-62 f",
         }
 
         const launchDataWithInvalidDate = {
             mission: "Cameroon Air Force",
             rocket: "CMR 1701-D",
-            target: "Kepler-186 f",
+            target: "Kepler-62 f",
             launchDate: "FalkeDate",
         }
 
@@ -65,7 +72,7 @@ describe('Launches API', () => {
                 .expect(400);
 
             expect(response.body).toStrictEqual({
-                error:"Missing required launch property",
+                error:"Missing required launch Information",
             })
         })
         test("It should catch invalid dates", async () => {
@@ -76,7 +83,7 @@ describe('Launches API', () => {
                 .expect(400);
 
             expect(response.body).toStrictEqual({
-                error: "Invalid Launch Date"
+                error: "Invalid launch date"
             });
         });
     });
