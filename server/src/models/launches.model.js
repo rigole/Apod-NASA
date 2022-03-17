@@ -38,9 +38,13 @@ async function saveLaunch(launch) {
 }
 
 
-function existsLaunchWithId(launchId) {
-    return launches.has(launchId)
+async function existsLaunchWithId(launchId) {
+    return launchesDatabase.findOne({
+        flightNumber: launchId
+    });
 }
+
+
 
 async function getLatestFlightNumber(){
     const latestLaunch = await launchesDatabase
@@ -59,7 +63,7 @@ async function getAllLaunches() {
         .find({}, {'__id':0, '__v':0})
 }
 
-function addNewLaunch(launch){
+/*function addNewLaunch(launch){
     latestFlightNumber++;
     launches.set(launch.flightNumber,
         Object.assign(launch, {
@@ -69,18 +73,44 @@ function addNewLaunch(launch){
          flightNumber:  latestFlightNumber,
         })
     )
+}*/
+
+async function scheduleNewLaunch() {
+
+    const newFlightNumber = await getLatestFlightNumber() + 1
+
+    const newLaunch = Object.assign(launch, {
+
+        success: true,
+        upcoming: true,
+        customers: ['FlashPayers', 'MINCOM'],
+        flightNumber: newFlightNumber,
+    });
+
+    await saveLaunch(newLaunch)
+
 }
 
-function abortLaunchById(launchId) {
-    const aborted = launches.get(launchId)
-    aborted.upcoming = false
-    aborted.success = false
-    return aborted
+async function abortLaunchById(launchId) {
+    //const aborted = launches.get(launchId)
+    //aborted.upcoming = false
+    //aborted.success = false
+    //return aborted
+
+    const aborted = await  launchesDatabase.updateOne({
+        flightNumber: launchId,
+    }, {
+        upcoming: false,
+        success: false,
+    });
+    return aborted.ok === 1 && aborted.nModified ===1;
+
 }
 
 module.exports ={
     existsLaunchWithId,
     getAllLaunches,
-    addNewLaunch,
+    //addNewLaunch,
+    scheduleNewLaunch,
     abortLaunchById,
 }
