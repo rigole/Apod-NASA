@@ -17,6 +17,7 @@ async function mongoConnect() {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
+
 }
 
 async function mongoDisconnect(){

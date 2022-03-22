@@ -4,6 +4,7 @@
   "description": "This project is to help to Work with NodeJS",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.26.1",
     "mongoose": "^6.2.4",
     "morgan": "^1.10.0",
     "requirejs": "^2.3.6"
