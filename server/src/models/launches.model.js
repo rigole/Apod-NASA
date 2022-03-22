@@ -1,5 +1,6 @@
 const launchesDatabase = require('./launches.mongo')
 const planets = require('./planets.mongo')
+const axios = require('axios')
 
 
 const launches = new Map()
@@ -20,9 +21,29 @@ const launch = {
 //launches.set(launch.flightNumber, launch)
 
 saveLaunch(launch)
-
+const SPACEX_API_URL = 'https://api.spacexdata.com/V4/launches/query'
 async function loadLaunchData() {
     console.log('Downloading launch data');
+    const response = await axios.post(SPACEX_API_URL, {
+        query: {},
+        options:{
+            populate: [
+                {
+                    path: "rocket",
+                    select: {
+                        name: 1
+                    }
+                },
+                {
+                    path: 'payloads',
+                    select: {
+                        'customers': 1
+                    }
+
+                }
+            ]
+        }
+    })
 }
 
 async function saveLaunch(launch) {
