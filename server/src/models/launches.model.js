@@ -8,7 +8,7 @@ const launches = new Map()
 //let latestFlightNumber = 100;
 const DEFAULT_FLIGHT_NUMBER = 100;
 
-const launch = {
+/*const launch = {
     flightNumber:100,
     mission: 'Kepler Exploration X',
     rocket:'Explorer IS1',
@@ -17,10 +17,10 @@ const launch = {
     customers:['FlashPayers', 'MINCOM'],
     upcoming: true,
     success:true,
-}
+}*/
 //launches.set(launch.flightNumber, launch)
 
-saveLaunch(launch)
+//saveLaunch(launch)
 
 const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
 
@@ -123,11 +123,12 @@ async function getLatestFlightNumber(){
     return latestLaunch.flightNumber;
 }
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
     return  launchesDatabase
         .find({}, {'__id':0, '__v':0})
-        .skip(20)
-        .limit(50);
+        .sort({ flightNumber: 1 })
+        .skip(skip)
+        .limit(limit);
 }
 
 /*function addNewLaunch(launch){
